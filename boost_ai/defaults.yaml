@@ -1,0 +1,108 @@
+# BOOST_AI built-in defaults.
+# Precedence: these defaults < ~/.config/boost-ai/config.yaml < <project>/.boost-ai/config.yaml
+
+routing:
+  # Preferred runtimes per difficulty level, best first. Runtimes that are not
+  # installed, not implemented yet or exhausted are skipped (and the reason is shown).
+  # Cheap work goes to DeepSeek (as an agent through Claude Code's CLI, billed to your
+  # DeepSeek balance). Claude Code leads everything else: its hook can ask you before pushes
+  # and destructive commands, so it can use git freely. Codex's sandbox cannot use git, so
+  # Codex is the fallback and the independent reviewer. If a conversation's level rises past
+  # what its runtime is listed for, it moves to the right runtime (and you are told).
+  policy:
+    L0: [deepseek, claude, codex]
+    L1: [deepseek, claude, codex]
+    L2: [claude, codex]
+    L3: [claude, codex]
+    L4: [claude, codex]
+  # Escalation order when a runtime proves insufficient. Never applied silently.
+  escalation: [deepseek, antigravity, codex, claude]
+  attempts_per_runtime: 2      # implementation attempts before proposing escalation
+  worktree_min_level: 3        # L3+ conversations run in an isolated git worktree
+
+runtimes:
+  codex:
+    model: null                # null = the CLI's own default
+    sandbox: workspace-write
+    timeout: 1800
+  claude:
+    model: null
+    # Model per conversation level (CLI aliases). Failed verification can escalate to L4's.
+    models: {L0: haiku, L1: haiku, L2: sonnet, L3: opus, L4: opus}
+    timeout: 1800
+    # Load your global MCP servers and skills into BOOST_AI runs. Off by default:
+    # they add ~9k tokens of fixed context to every agent turn.
+    global_extensions: false
+  deepseek:
+    # Needs DEEPSEEK_API_KEY (in your shell, never in a repo file) and the claude CLI.
+    models: {L0: deepseek-flash, L1: deepseek-flash, L2: deepseek-v4-pro, L3: deepseek-v4-pro, L4: deepseek-v4-pro}
+    timeout: 1800
+    global_extensions: false
+  antigravity:
+    # Off until you opt in: headless `agy` can only run commands with all permissions
+    # skipped, so BOOST_AI's hook becomes the gate for every tool (see docs).
+    enabled: false
+    model: gemini-3.8-flash-medium
+    timeout: 1800
+
+# Independent cross-model review (read-only), only for high-risk work.
+review:
+  min_level: 3                 # L3 HIGH and L4 CRITICAL
+  runtimes: [codex, claude]    # first available that differs from the implementer
+
+# Project verification commands, run deterministically after each attempt.
+# Usually set per project by `boost-ai init`.
+commands: {}
+verify_timeout: 900
+
+# Read-only plan before any change, shown to you to approve, revise or stop. It also picks
+# the skills the implementation may use. Questions get a direct answer instead of a plan.
+plan:
+  min_level: 2                 # L2+ conversations; null disables
+  attachments: true            # any turn with attached files (e.g. a spec .md)
+
+context:
+  agents_md_max_chars: 4000    # AGENTS.md excerpt sent to the runtime
+  # Code context comes from graft (npm i -g graft): every runtime gets only its MCP server and a
+  # repo map; a missing graph (e.g. a new worktree) is built first ($0, no LLM). false disables.
+  graft: true
+  # Concept nodes (graft/*.md + per-symbol summaries, browse with `graft viz`) refreshed in the
+  # background after every approved commit; incremental, billed to DEEPSEEK_API_KEY. null: off.
+  graft_deep: deepseek
+
+triage:
+  # A tiny DeepSeek call (~300 tokens) refines the level; deterministic risk rules stay as
+  # a floor, and on any failure only the rules are used. null disables it.
+  llm: deepseek
+
+# BOOST_AI's own layer lives beside the package in harness/, split by category, and never in
+# another agent's folder (~/.claude, ~/.agents, ~/.codex):
+#   harness/skills/<category>/<skill>/SKILL.md   skills (curated suite: harness/skills/SUITE.md)
+#   harness/rules/<category>/*.md                 rules for every project
+# Projects add their own in .boost-ai/skills/<category>/ and .boost-ai/rules/<category>/.
+# Rules are non-negotiable and always sent in full; skills go in the prompt as name, category,
+# description and path only. /rules, /rule [category:] <text>, /skills, /skill add|remove.
+
+memory:
+  backend: local               # local | logseq (later)
+
+notifications:
+  enabled: true
+
+git:
+  offer_push: true             # after an approved commit, ask "Push <branch>?" (never automatic)
+  # Start with auto-commit on: each finished change (each plan task) is committed with the
+  # agent's message without asking. Toggle it any time: Ctrl+T, /autocommit or click "Commits".
+  auto_commit: false
+
+indicator:                     # top-bar status (needs gir1.2-ayatanaappindicator3-0.1)
+  enabled: true
+  python: /usr/bin/python3     # must have PyGObject; the project venv does not
+
+sounds:
+  enabled: true
+  volume: 0.25
+  events:
+    needs_input: soft_ping
+    completed: soft_success
+    warning: soft_warning

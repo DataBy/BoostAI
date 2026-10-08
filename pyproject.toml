@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "boost-ai"
+version = "0.1.0"
+description = "Minimal local AI software-engineering harness"
+requires-python = ">=3.11"
+dependencies = [
+    "textual>=8.0",
+    "typer>=0.12",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.23", "ruff>=0.6"]
+
+[project.scripts]
+boost-ai = "boost_ai.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["boost_ai*"]
+
+[tool.setuptools.package-data]
+boost_ai = ["defaults.yaml", "sounds/*.wav", "tui/*.tcss"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = ["integration: uses real runtime CLIs and consumes quota"]
+addopts = "-m 'not integration'"
+
+[tool.ruff]
+line-length = 120
+extend-exclude = ["harness/skills"]  # vendored third-party skills, kept byte-for-byte
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]

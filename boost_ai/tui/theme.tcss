@@ -1,0 +1,188 @@
+/* BOOST_AI — dark gray, restrained, soft green accents. */
+
+Screen {
+    background: #1c1c1e;
+    color: #d1d1d6;
+    layout: vertical;
+}
+
+/* Branch dropdown (Warp-style). It is a Screen too: keep the app fully visible behind it. */
+BranchPicker {
+    background: #000000 0%;
+    align: left top;
+}
+#branch-picker {
+    height: auto;
+    max-height: 20;
+    background: #232325;
+    border: round #3a3a3c;
+    padding: 0;
+    opacity: 0;
+}
+#branch-picker Input, #branch-picker Input:focus {
+    background: #232325;
+    background-tint: #000000 0%;
+    border: none;
+    height: 1;
+    margin: 0;
+    padding: 0 3;
+    color: #f2f2f7;
+}
+#branch-picker OptionList {
+    background: #232325;
+    background-tint: #232325 0%;
+    border: none;
+    border-top: hkey #3a3a3c;
+    height: auto;
+    max-height: 16;
+    margin: 0;
+    padding: 0;
+    scrollbar-size-vertical: 1;
+}
+#branch-picker OptionList > .option-list--option {
+    padding: 0 1;
+    background: #232325;
+}
+#branch-picker OptionList > .option-list--option-highlighted,
+#branch-picker OptionList:focus > .option-list--option-highlighted {
+    background: #2f4a3a;
+    color: #f2f2f7;
+    text-style: none;
+}
+#branch-picker OptionList > .option-list--option-hover {
+    background: #2c2c2e;
+}
+
+#logo {
+    width: 100%;
+    content-align: center middle;
+    text-align: center;
+    color: #6fcf97;
+    padding: 1 0 0 0;
+    height: 4;
+}
+
+#statusbar {
+    height: auto;
+    padding: 1 4 1 4;
+    border-bottom: hkey #2c2c2e;
+    grid-size: 4;
+    grid-columns: 8 1fr 8 1fr;
+    grid-gutter: 0 2;
+    grid-rows: 1;
+}
+#statusbar .sb-label { color: #8e8e93; }
+#statusbar .sb-value { width: auto; }
+/* the branch is clickable: soft orange, a touch lighter on hover */
+#sb-branch { color: #e8a26b; }
+#sb-branch:hover { color: #f4bf93; }
+
+#log {
+    height: 1fr;
+    padding: 1 4 0 4;
+    scrollbar-size-vertical: 1;
+    scrollbar-color: #3a3a3c;
+    scrollbar-background: #1c1c1e;
+}
+
+.msg {
+    margin: 0 0 1 0;
+    height: auto;
+}
+.msg.user { color: #f2f2f7; }
+.msg.detail { color: #8e8e93; }
+.msg.success { color: #6fcf97; }
+.msg.warning { color: #e5c07b; }
+.msg.error { color: #e88388; }
+
+.question {
+    height: auto;
+    margin: 0 0 1 0;
+}
+.question .q-text { color: #f2f2f7; margin: 0 0 1 0; }
+.question .choices { height: auto; }
+
+.question Button {
+    background: #2c2c2e;
+    color: #d1d1d6;
+    border: none;
+    height: 1;
+    min-width: 10;
+    margin: 0 2 0 0;
+    padding: 0 2;
+}
+.question Button:hover { background: #3a3a3c; }
+.question Button:focus { background: #2f4a3a; color: #6fcf97; text-style: bold; }
+
+.question TextArea {
+    height: 8;
+    background: #232325;
+    border: tall #2c2c2e;
+    margin: 0 0 1 0;
+}
+.question TextArea:focus { border: tall #3f6b52; }
+
+#activity {
+    height: 1;
+    padding: 0 4;
+    color: #8e8e93;
+}
+
+/* One frame around ＋ and the prompt (no seam between them). */
+#composer {
+    height: 3;
+    margin: 0 3 1 3;
+    background: #232325;
+    border: round #3a3a3c;
+}
+#composer:focus-within { border: round #3f6b52; }
+#attach-btn {
+    width: 3;
+    min-width: 3;
+    height: 1;
+    margin: 0 1 0 0;
+    padding: 0;
+    background: #232325;
+    color: #8e8e93;
+    border: none;
+    text-style: bold;
+}
+#attach-btn:hover { color: #6fcf97; background: #2c2c2e; }
+#attach-btn:focus { color: #6fcf97; background: #232325; text-style: bold; }
+#prompt {
+    width: 1fr;
+    height: 1;
+    margin: 0;
+    padding: 0 1;
+    background: #232325;
+    background-tint: #000000 0%;
+    border: none;
+    color: #f2f2f7;
+}
+/* no focus tint/underline: the frame's color already says where you type */
+#prompt:focus { border: none; background-tint: #000000 0%; }
+#tray {
+    height: auto;
+    margin: 0 3 0 4;
+}
+#tray.-empty { display: none; }
+#tray .chip {
+    height: 1;
+    width: auto;
+    min-width: 0;
+    margin: 0 1 0 0;
+    padding: 0 1;
+    border: none;
+    background: #2c2c2e;
+    color: #d1d1d6;
+    text-style: none;
+}
+#tray .chip:hover { background: #3a3a3c; color: #e88388; }
+
+/* Plans and agent replies rendered as Markdown */
+.msg.markdown { background: transparent; color: #f2f2f7; height: auto; margin: 0 0 1 0; padding: 0; }
+.msg.markdown MarkdownTable { width: auto; }
+
+/* Pasted text: folded under its [Pasted text #n · …] title */
+.msg.pasted { background: transparent; border: none; padding: 0; color: #8e8e93; }
+.msg.pasted Contents { padding: 0 0 0 2; color: #c7c7cc; }

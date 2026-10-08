@@ -1,0 +1,10 @@
+# BOOST_AI project config. Overrides ~/.config/boost-ai/config.yaml and built-in defaults.
+# Verification commands run after every attempt (deterministic, no LLM).
+commands:
+  test: pytest -q
+  lint: ruff check .
+
+# routing:
+#   policy:
+#     L2: [codex, claude]
+#   worktree_min_level: 2
