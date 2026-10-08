@@ -1,11 +1,12 @@
 [build-system]
-requires = ["setuptools>=69"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "boost-ai"
 version = "0.1.0"
 description = "Minimal local AI software-engineering harness"
+license = "MIT"
 requires-python = ">=3.11"
 dependencies = [
     "textual>=8.0",

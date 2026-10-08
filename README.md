@@ -1,6 +1,22 @@
-# BOOST_AI
+<p align="center">
+  <img alt="BOOST_AI" src="docs/images/boost-ai-title.svg" width="462">
+</p>
 
-Un harness local y minimalista para programar con agentes de IA desde la terminal.
+<p align="center">
+  <img alt="Python: 3.11+" src="https://img.shields.io/badge/Python-3.11%2B-3776AB?style=flat-square&logo=python&logoColor=white">
+  <img alt="TUI: Textual" src="https://img.shields.io/badge/TUI-Textual-6fcf97?style=flat-square">
+  <img alt="platform: Linux" src="https://img.shields.io/badge/platform-Linux-FCC624?style=flat-square&logo=linux&logoColor=white">
+  <img alt="agents: Claude Code" src="https://img.shields.io/badge/agents-Claude%20Code-D97757?style=flat-square&logo=anthropic&logoColor=white">
+  <img alt="agents: Codex" src="https://img.shields.io/badge/agents-Codex-412991?style=flat-square&logo=openai&logoColor=white">
+  <img alt="agents: DeepSeek" src="https://img.shields.io/badge/agents-DeepSeek-4D6BFE?style=flat-square">
+  <img alt="context: Graft" src="https://img.shields.io/badge/context-Graft-8e8e93?style=flat-square">
+  <img alt="tipo: AI harness" src="https://img.shields.io/badge/tipo-AI%20harness-e5c07b?style=flat-square">
+  <img alt="local: first" src="https://img.shields.io/badge/local-first-2ea44f?style=flat-square">
+  <img alt="push: nunca automático" src="https://img.shields.io/badge/push-nunca%20autom%C3%A1tico-d73a49?style=flat-square">
+  <a href="LICENSE"><img alt="license: MIT" src="https://img.shields.io/badge/license-MIT-blue?style=flat-square"></a>
+</p>
+
+<p align="center"><b>Un harness local y minimalista para programar con agentes de IA desde la terminal.</b></p>
 
 Le describes en lenguaje normal lo que necesitas y BOOST_AI elige el agente adecuado
 (Claude Code, Codex, DeepSeek), le prepara el contexto, le hace proponer un plan, verifica
@@ -496,3 +512,11 @@ Todas las opciones, comentadas, están en [`boost_ai/defaults.yaml`](boost_ai/de
 - `harness/`: skills y rules del harness.
 - [`docs/architecture-v1.md`](docs/architecture-v1.md): el diseño en detalle.
 - [`AGENTS.md`](AGENTS.md): las reglas para quien (persona o agente) trabaje en este repo.
+
+---
+
+## Licencia
+
+[MIT](LICENSE). Las skills de terceros incluidas en `harness/skills/` conservan sus propias
+licencias (MIT, Apache-2.0, CC BY-SA 4.0), detalladas en
+[`harness/skills/SUITE.md`](harness/skills/SUITE.md).
